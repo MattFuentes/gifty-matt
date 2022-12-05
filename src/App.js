@@ -1,25 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react'
+import { AddCategory, GifGrid } from './components';
 
-function App() {
+export const GifExpertApp = () => {
+
+  const [categories, setCategories] = useState(['One Punch']);
+
+  const onAddCategory = ( newCategory) => {
+    if( categories.includes(newCategory) ) return;
+    setCategories([ newCategory, ...categories])
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
-
-export default App;
+    <React.Fragment>
+      <h1>Hola</h1>
+      <AddCategory 
+        onNewCategory={ event => onAddCategory(event)}
+      />
+      <button onClick={onAddCategory}>Agregar</button>
+      <ol>
+        {
+          categories.map( category => ( 
+            <GifGrid 
+              key={category} 
+              category={category}/> 
+            ))
+        }
+      </ol>
+    </React.Fragment>
+  )
+} 
